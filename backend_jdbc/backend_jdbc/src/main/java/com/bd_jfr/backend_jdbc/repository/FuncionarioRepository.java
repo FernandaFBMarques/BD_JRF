@@ -5,8 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public class FuncionarioRepository {
@@ -14,21 +17,48 @@ public class FuncionarioRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    private RowMapper<Funcionario> rowMapper = (ResultSet rs, int rowNum) -> {
-        Funcionario funcionario = new Funcionario();
-        funcionario.setCpf(rs.getString("cpf"));
-        funcionario.setNome(rs.getString("nome"));
-        funcionario.setTelefone(rs.getString("telefone"));
-        funcionario.setEmail(rs.getString("email"));
-        funcionario.setRua(rs.getString("rua"));
-        funcionario.setNumero(rs.getInt("numero"));
-        funcionario.setCidade(rs.getString("cidade"));
-        funcionario.setBairro(rs.getString("bairro"));
-        return funcionario;
-    };
-
     public List<Funcionario> findAll() {
         String sql = "SELECT * FROM Funcionarios";
-        return jdbcTemplate.query(sql, rowMapper);
+        return jdbcTemplate.query(sql, new FuncionarioRowMapper());
+    }
+
+    public Optional<Funcionario> findByCpf(String cpf) {
+        String sql = "SELECT * FROM Funcionarios WHERE cpf = ?";
+        return jdbcTemplate.query(sql, new Object[]{cpf}, new FuncionarioRowMapper())
+                .stream()
+                .findFirst();
+    }
+
+    public int save(Funcionario funcionario) {
+        String sql = "INSERT INTO Funcionarios (cpf, nome, telefone, email, rua, numero, cidade, bairro) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        return jdbcTemplate.update(sql, funcionario.getCpf(), funcionario.getNome(), funcionario.getTelefone(), funcionario.getEmail(),
+                funcionario.getRua(), funcionario.getNumero(), funcionario.getCidade(), funcionario.getBairro());
+    }
+
+    public int update(Funcionario funcionario) {
+        String sql = "UPDATE Funcionarios SET nome = ?, telefone = ?, email = ?, rua = ?, numero = ?, cidade = ?, bairro = ? WHERE cpf = ?";
+        return jdbcTemplate.update(sql, funcionario.getNome(), funcionario.getTelefone(), funcionario.getEmail(),
+                funcionario.getRua(), funcionario.getNumero(), funcionario.getCidade(), funcionario.getBairro(), funcionario.getCpf());
+    }
+
+    public int deleteByCpf(String cpf) {
+        String sql = "DELETE FROM Funcionarios WHERE cpf = ?";
+        return jdbcTemplate.update(sql, cpf);
+    }
+
+    private static class FuncionarioRowMapper implements RowMapper<Funcionario> {
+        @Override
+        public Funcionario mapRow(ResultSet rs, int rowNum) throws SQLException {
+            Funcionario funcionario = new Funcionario();
+            funcionario.setCpf(rs.getString("cpf"));
+            funcionario.setNome(rs.getString("nome"));
+            funcionario.setTelefone(rs.getString("telefone"));
+            funcionario.setEmail(rs.getString("email"));
+            funcionario.setRua(rs.getString("rua"));
+            funcionario.setNumero(rs.getInt("numero"));
+            funcionario.setCidade(rs.getString("cidade"));
+            funcionario.setBairro(rs.getString("bairro"));
+            return funcionario;
+        }
     }
 }

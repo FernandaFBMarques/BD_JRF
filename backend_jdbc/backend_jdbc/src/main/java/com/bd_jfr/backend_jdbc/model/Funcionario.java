@@ -3,11 +3,9 @@ package com.bd_jfr.backend_jdbc.model;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
 @Getter
+@Setter
 public class Funcionario {
-    // Setters
-    // Getters
     private String cpf;
     private String nome;
     private String telefone;
@@ -16,5 +14,4 @@ public class Funcionario {
     private int numero;
     private String cidade;
     private String bairro;
-
 }
