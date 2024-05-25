@@ -18,7 +18,15 @@ public class FuncionarioRepository {
     private JdbcTemplate jdbcTemplate;
 
     public List<Funcionario> findAll() {
-        String sql = "SELECT * FROM Funcionarios";
+        String sql = "SELECT f.*, " +
+                "CASE " +
+                "  WHEN c.fk_Funcionarios_cpf IS NOT NULL THEN 'Contador' " +
+                "  WHEN e.fk_Funcionarios_cpf IS NOT NULL THEN 'Equipe de Vendas' " +
+                "  ELSE 'Outro' " +
+                "END as cargo " +
+                "FROM Funcionarios f " +
+                "LEFT JOIN Contadores c ON f.cpf = c.fk_Funcionarios_cpf " +
+                "LEFT JOIN Equipe_de_vendas e ON f.cpf = e.fk_Funcionarios_cpf";
         return jdbcTemplate.query(sql, new FuncionarioRowMapper());
     }
 
@@ -58,6 +66,7 @@ public class FuncionarioRepository {
             funcionario.setNumero(rs.getInt("numero"));
             funcionario.setCidade(rs.getString("cidade"));
             funcionario.setBairro(rs.getString("bairro"));
+            funcionario.setCargo(rs.getString("cargo"));
             return funcionario;
         }
     }
