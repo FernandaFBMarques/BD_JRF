@@ -24,4 +24,8 @@ public class ProdutoService {
     public void updateProduto(String codigoDeBarras, Produto produto) {
         produtoRepository.update(codigoDeBarras, produto);
     }
+
+    public void deleteProduto(String codigoDeBarras) {
+        produtoRepository.deleteByCodigoDeBarras(codigoDeBarras);
+    }
 }
