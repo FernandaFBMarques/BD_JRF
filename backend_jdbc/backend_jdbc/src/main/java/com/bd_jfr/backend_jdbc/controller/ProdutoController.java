@@ -28,4 +28,9 @@ public class ProdutoController {
     public void updateProduto(@PathVariable String codigoDeBarras, @RequestBody Produto produto) {
         produtoService.updateProduto(codigoDeBarras, produto);
     }
+
+    @DeleteMapping("/{codigoDeBarras}")
+    public void deleteProduto(@PathVariable String codigoDeBarras) {
+        produtoService.deleteProduto(codigoDeBarras);
+    }
 }
