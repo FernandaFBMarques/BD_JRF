@@ -5,7 +5,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
@@ -33,6 +32,11 @@ public class ProdutoRepository {
         jdbcTemplate.update(sql, produto.getNomeProduto(), produto.getModelo(), produto.getCor(), produto.getTamanho(), produto.getCategoria(), produto.getPreco(), produto.getPrazo(), produto.getUrlImagem(), codigoDeBarras);
     }
 
+    public void deleteByCodigoDeBarras(String codigoDeBarras) {
+        String sql = "DELETE FROM Produtos WHERE codigo_de_barras = ?";
+        jdbcTemplate.update(sql, codigoDeBarras);
+    }
+
     private static class ProdutoRowMapper implements RowMapper<Produto> {
         @Override
         public Produto mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -50,5 +54,3 @@ public class ProdutoRepository {
         }
     }
 }
-
-
