@@ -10,7 +10,8 @@ CREATE TABLE Funcionarios (
     cidade VARCHAR(255) NOT NULL,
     bairro VARCHAR(255) NOT NULL,
     esta_ativo BOOLEAN DEFAULT TRUE,
-    CONSTRAINT funcionario_pk PRIMARY KEY (cpf)
+    CONSTRAINT funcionario_pk PRIMARY KEY (cpf),
+    CONSTRAINT chk_email CHECK (email LIKE '%_@__%.__%') 
 );
 
 CREATE TABLE Contadores (
@@ -51,14 +52,16 @@ CREATE TABLE Clientes (
     estado VARCHAR(255)NOT NULL,
     tipo_varejo BOOLEAN NOT NULL,
     tipo_boutique BOOLEAN NOT NULL,
-    PRIMARY KEY (cnpj)
+    PRIMARY KEY (cnpj),
+    CONSTRAINT chk_email_principal_cliente CHECK (email LIKE '%_@__%.__%') 
 );
 
 CREATE TABLE email (
     id_email INTEGER PRIMARY KEY AUTO_INCREMENT,
     fk_Clientes_cnpj VARCHAR(255)NOT NULL,
     email VARCHAR(255)NOT NULL,
-    FOREIGN KEY (fk_Clientes_cnpj) REFERENCES Clientes(cnpj)
+    FOREIGN KEY (fk_Clientes_cnpj) REFERENCES Clientes(cnpj),
+    CONSTRAINT chk_email_opcional_cliente CHECK (email LIKE '%_@__%.__%') 
 );
 
 CREATE TABLE Telefone (
@@ -119,7 +122,7 @@ CREATE TABLE NF_de_comissionamento (
     FOREIGN KEY (fk_Contadores_fk_Funcionarios_cpf) REFERENCES Contadores(fk_Funcionarios_cpf)
 );
 
-CREATE TABLE EmitidoPor (
+CREATE TABLE geraNF (
     fk_Venda_numero_venda INTEGER,
     fk_NF_de_comissionamento_numero INTEGER,
     fk_Equipe_de_vendas_fk_Funcionarios_cpf VARCHAR(255),

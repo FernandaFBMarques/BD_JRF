@@ -139,7 +139,7 @@ INSERT INTO NF_de_comissionamento (
     (1005, 1, '2024-02-05', '2024-02-05', 581.878, '77777777777');
 
 
-INSERT INTO EmitidoPor (
+INSERT INTO geranf (
     fk_Venda_numero_venda, fk_NF_de_comissionamento_numero, fk_Equipe_de_vendas_fk_Funcionarios_cpf
 ) VALUES
     (1, 1001, '11111111111'),
