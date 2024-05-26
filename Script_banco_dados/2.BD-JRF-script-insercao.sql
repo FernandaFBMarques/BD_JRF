@@ -81,17 +81,17 @@ INSERT INTO Telefone (fk_Clientes_cnpj, numero_telefone) VALUES
 ('89012345000128', 74389012346); 
 
 INSERT INTO Produtos (codigo_de_barras, nome_produto, modelo, cor, tamanho, categoria, preco, prazo, url_imagem) VALUES
-('9876543210123', 'Tênis Olympikus Corre 3', 'Corre 3', 'Várias', 42, 'Tênis de Corrida', 229.99, '2024-12-31', 'https://www.centauro.com.br/tenis-olympikus-corre-3-unissex-980095.html'),
-('1234567890124', 'Tênis Olympikus Corre Supra', 'Corre Supra', 'Roxa', 40, 'Tênis de Corrida', 249.99, '2024-11-30', 'https://www.centauro.com.br/tenis-olympikus-corre-supra-unissex-980096.html'),
-('1234567890125', 'Tênis Casual Unissex Under Armour HOVR Infinite Summit 2', 'HOVR Infinite Summit 2', 'Cinza', 41, 'Tênis Casual', 279.99, '2024-10-31', 'https://www.centauro.com.br/tenis-under-armour-hovr-infinite-summit-2-unissex-980097.html'),
-('1234567890126', 'Tênis Nike Revolution 5', 'Revolution 5', 'Preto', 43, 'Tênis de Corrida', 199.99, '2024-09-30', 'https://www.centauro.com.br/tenis-nike-revolution-5-unissex-980098.html'),
-('1234567890127', 'Tênis Adidas Ultraboost 21', 'Ultraboost 21', 'Branco', 44, 'Tênis de Corrida', 399.99, '2024-08-31', 'https://www.centauro.com.br/tenis-adidas-ultraboost-21-unissex-980099.html'),
-('1234567890128', 'Tênis Mizuno Wave Prophecy 9', 'Wave Prophecy 9', 'Azul', 39, 'Tênis de Corrida', 499.99, '2024-07-31', 'https://www.centauro.com.br/tenis-mizuno-wave-prophecy-9-unissex-980100.html'),
-('1234567890129', 'Tênis Asics Gel-Kayano 27', 'Gel-Kayano 27', 'Verde', 38, 'Tênis de Corrida', 349.99, '2024-06-30', 'https://www.centauro.com.br/tenis-asics-gel-kayano-27-unissex-980101.html'),
-('1234567890130', 'Tênis Puma Hybrid NX', 'Hybrid NX', 'Vermelho', 45, 'Tênis Casual', 219.99, '2024-05-31', 'https://www.centauro.com.br/tenis-puma-hybrid-nx-unissex-980102.html'),
-('1234567890131', 'Tênis Reebok Nano 9', 'Nano 9', 'Amarelo', 37, 'Tênis de Treino', 299.99, '2024-04-30', 'https://www.centauro.com.br/tenis-reebok-nano-9-unissex-980103.html'),
-('1234567890132', 'Tênis New Balance 1080v10', '1080v10', 'Laranja', 46, 'Tênis de Corrida', 329.99, '2024-03-31', 'https://www.centauro.com.br/tenis-new-balance-1080v10-unissex-980104.html'),
-('1234567890133', 'Tênis Fila KR3', 'KR3', 'Rosa', 36, 'Tênis de Corrida', 189.99, '2024-02-29', 'https://www.centauro.com.br/tenis-fila-kr3-unissex-980105.html')
+('9876543210123', 'Tênis Olympikus Corre 3', 'Corre 3', 'Laranja', 42, 'Tênis de Corrida', 229.99, '2024-12-31', 'https://imgcentauro-a.akamaihd.net/768x768/98009511.jpg'),
+('1234567890124', 'Tênis Olympikus Corre Supra', 'Corre Supra', 'Laranja', 40, 'Tênis de Corrida', 249.99, '2024-11-30', 'https://imgcentauro-a.akamaihd.net/768x768/98338511.jpg'),
+('1234567890125', 'Tênis Casual Unissex Under Armour HOVR Infinite Summit 2', 'HOVR Infinite Summit 2', 'Cinza', 41, 'Tênis Casual', 279.99, '2024-10-31', 'https://imgcentauro-a.akamaihd.net/768x768/98009732.jpg'),
+('1234567890126', 'Tênis Nike Revolution 5', 'Revolution 5', 'Preto', 43, 'Tênis de Corrida', 199.99, '2024-09-30', 'https://imgcentauro-a.akamaihd.net/768x768/98582431.jpg'),
+('1234567890127', 'Tênis Adidas Ultraboost 21', 'Ultraboost 21', 'Branco', 44, 'Tênis de Corrida', 399.99, '2024-08-31', 'https://imgcentauro-a.akamaihd.net/768x768/M12QE0NF.jpg'),
+('1234567890128', 'Tênis Mizuno Wave Prophecy 9', 'Wave Prophecy 9', 'Azul', 39, 'Tênis de Corrida', 499.99, '2024-07-31', 'https://imgcentauro-a.akamaihd.net/768x768/M0ZDC93L.jpg'),
+('1234567890129', 'Tênis Asics Gel-Kayano 27', 'Gel-Kayano 27', 'Azul', 38, 'Tênis de Corrida', 349.99, '2024-06-30', 'https://imgcentauro-a.akamaihd.net/768x768/95134805.jpg'),
+('1234567890130', 'Tênis Puma Caven 2.0 Retrô Club BDP', 'Caven 2.0 Retrô Club BDP', 'Branco', 45, 'Tênis Casual', 219.99, '2024-05-31', 'https://imgcentauro-a.akamaihd.net/768x768/98898501.jpg'),
+('1234567890131', 'Tênis Reebok Nano 9', 'Nano 9', 'Cinza', 37, 'Tênis de Treino', 299.99, '2024-04-30', 'https://imgcentauro-a.akamaihd.net/768x768/M0Y6LT03.jpg'),
+('1234567890132', 'Tênis New Balance 1080v13', '1080v13', 'Laranja', 46, 'Tênis de Corrida', 329.99, '2024-03-31', 'https://imgcentauro-a.akamaihd.net/768x768/98348933.jpg'),
+('1234567890133', 'Tênis Fila KR6', 'KR6', 'Rosa', 36, 'Tênis de Corrida', 189.99, '2024-02-29', 'https://imgcentauro-a.akamaihd.net/768x768/9806062V.jpg')
 ;
 
 
@@ -128,23 +128,4 @@ INSERT INTO fazvendaproduto (fk_Venda_numero_venda,fk_Produtos_codigo_de_barras,
 (5,'1234567890133', 5, 1),
 (3,'9876543210123', 6, 15)
 ;
-
-INSERT INTO NF_de_comissionamento (
-    numero, serie, data_emissao, data_saida, calculo_do_imposto, fk_Contadores_fk_Funcionarios_cpf
-) VALUES
-    (1001, 1, '2024-01-15', '2024-01-15', 2617.901, '66666666666'),
-    (1002, 1, '2024-01-20', '2024-01-20', 2089.945, '66666666666'),
-    (1003, 1, '2024-01-25', '2024-01-25', 3794.35, '77777777777'),
-    (1004, 1, '2024-01-30', '2024-01-30', 2229.92, '77777777777'),
-    (1005, 1, '2024-02-05', '2024-02-05', 581.878, '77777777777');
-
-
-INSERT INTO geranf (
-    fk_Venda_numero_venda, fk_NF_de_comissionamento_numero, fk_Equipe_de_vendas_fk_Funcionarios_cpf
-) VALUES
-    (1, 1001, '11111111111'),
-    (2, 1002, '22222222222'),
-    (3, 1003, '88888888888'),
-    (4, 1004, '33333333333'),
-    (5, 1005, '44444444444');
 
