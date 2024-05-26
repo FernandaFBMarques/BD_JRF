@@ -55,4 +55,6 @@ public class FuncionarioController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
 }

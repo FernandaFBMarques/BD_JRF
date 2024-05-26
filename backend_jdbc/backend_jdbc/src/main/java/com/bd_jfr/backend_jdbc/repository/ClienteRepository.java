@@ -20,6 +20,28 @@ public class ClienteRepository {
         String sql = "SELECT c.*, (SELECT COUNT(*) FROM email e WHERE e.fk_Clientes_cnpj = c.cnpj) AS totalEmailsAlternativos FROM Clientes c";
         return jdbcTemplate.query(sql, new ClienteRowMapper());
     }
+    public void save(Cliente cliente, List<String> emails) {
+        String sqlCliente = "INSERT INTO Clientes (cnpj, nome_loja, telefone, email, rua, numero, cidade, bairro, estado, tipo_varejo, tipo_boutique) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sqlCliente, cliente.getCnpj(), cliente.getNomeLoja(), cliente.getTelefone(), cliente.getEmail(), cliente.getRua(), cliente.getNumero(), cliente.getCidade(), cliente.getBairro(), cliente.getEstado(), cliente.isTipoVarejo(), cliente.isTipoBoutique());
+
+        String sqlEmail = "INSERT INTO email (fk_Clientes_cnpj, email) VALUES (?, ?)";
+        for (String email : emails) {
+            jdbcTemplate.update(sqlEmail, cliente.getCnpj(), email);
+        }
+    }
+
+    public void update(Cliente cliente, List<String> emails) {
+        String sqlCliente = "UPDATE Clientes SET nome_loja = ?, telefone = ?, email = ?, rua = ?, numero = ?, cidade = ?, bairro = ?, estado = ?, tipo_varejo = ?, tipo_boutique = ? WHERE cnpj = ?";
+        jdbcTemplate.update(sqlCliente, cliente.getNomeLoja(), cliente.getTelefone(), cliente.getEmail(), cliente.getRua(), cliente.getNumero(), cliente.getCidade(), cliente.getBairro(), cliente.getEstado(), cliente.isTipoVarejo(), cliente.isTipoBoutique(), cliente.getCnpj());
+
+        String sqlDeleteEmails = "DELETE FROM email WHERE fk_Clientes_cnpj = ?";
+        jdbcTemplate.update(sqlDeleteEmails, cliente.getCnpj());
+
+        String sqlEmail = "INSERT INTO email (fk_Clientes_cnpj, email) VALUES (?, ?)";
+        for (String email : emails) {
+            jdbcTemplate.update(sqlEmail, cliente.getCnpj(), email);
+        }
+    }
 
     private static class ClienteRowMapper implements RowMapper<Cliente> {
         @Override

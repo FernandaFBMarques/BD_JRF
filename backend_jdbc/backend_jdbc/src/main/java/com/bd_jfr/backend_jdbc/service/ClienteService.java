@@ -17,5 +17,13 @@ public class ClienteService {
         return clienteRepository.findAll();
     }
 
+    public void addCliente(Cliente cliente, List<String> emails) {
+        clienteRepository.save(cliente, emails);
+    }
+
+    public void updateCliente(Cliente cliente, List<String> emails) {
+        clienteRepository.update(cliente, emails);
+    }
+
 
 }
