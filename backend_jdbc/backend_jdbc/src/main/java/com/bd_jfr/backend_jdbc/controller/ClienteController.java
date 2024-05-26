@@ -3,7 +3,6 @@ package com.bd_jfr.backend_jdbc.controller;
 import com.bd_jfr.backend_jdbc.ClienteDTO.ClienteDTO;
 import com.bd_jfr.backend_jdbc.model.Cliente;
 import com.bd_jfr.backend_jdbc.service.ClienteService;
-import com.bd_jfr.backend_jdbc.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,6 +31,10 @@ public class ClienteController {
         Cliente cliente = new Cliente(clienteDTO.getCnpj(), clienteDTO.getNomeLoja(), clienteDTO.getTelefone(), clienteDTO.getEmail(), clienteDTO.getRua(), clienteDTO.getNumero(), clienteDTO.getCidade(), clienteDTO.getBairro(), clienteDTO.getEstado(), clienteDTO.isTipoVarejo(), clienteDTO.isTipoBoutique(), 0);
         clienteService.updateCliente(cliente, clienteDTO.getEmails());
     }
-}
 
+    @DeleteMapping("/deleteCliente/{cnpj}")
+    public void deleteCliente(@PathVariable String cnpj) {
+        clienteService.deleteCliente(cnpj);
+    }
+}
 

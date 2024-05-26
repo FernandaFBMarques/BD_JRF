@@ -1,4 +1,5 @@
 package com.bd_jfr.backend_jdbc.repository;
+
 import com.bd_jfr.backend_jdbc.model.Cliente;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -20,6 +21,7 @@ public class ClienteRepository {
         String sql = "SELECT c.*, (SELECT COUNT(*) FROM email e WHERE e.fk_Clientes_cnpj = c.cnpj) AS totalEmailsAlternativos FROM Clientes c";
         return jdbcTemplate.query(sql, new ClienteRowMapper());
     }
+
     public void save(Cliente cliente, List<String> emails) {
         String sqlCliente = "INSERT INTO Clientes (cnpj, nome_loja, telefone, email, rua, numero, cidade, bairro, estado, tipo_varejo, tipo_boutique) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sqlCliente, cliente.getCnpj(), cliente.getNomeLoja(), cliente.getTelefone(), cliente.getEmail(), cliente.getRua(), cliente.getNumero(), cliente.getCidade(), cliente.getBairro(), cliente.getEstado(), cliente.isTipoVarejo(), cliente.isTipoBoutique());
@@ -41,6 +43,14 @@ public class ClienteRepository {
         for (String email : emails) {
             jdbcTemplate.update(sqlEmail, cliente.getCnpj(), email);
         }
+    }
+
+    public void delete(String cnpj) {
+        String sqlDeleteEmails = "DELETE FROM email WHERE fk_Clientes_cnpj = ?";
+        jdbcTemplate.update(sqlDeleteEmails, cnpj);
+
+        String sqlCliente = "DELETE FROM Clientes WHERE cnpj = ?";
+        jdbcTemplate.update(sqlCliente, cnpj);
     }
 
     private static class ClienteRowMapper implements RowMapper<Cliente> {

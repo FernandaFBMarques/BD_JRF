@@ -25,5 +25,7 @@ public class ClienteService {
         clienteRepository.update(cliente, emails);
     }
 
-
+    public void deleteCliente(String cnpj) {
+        clienteRepository.delete(cnpj);
+    }
 }
