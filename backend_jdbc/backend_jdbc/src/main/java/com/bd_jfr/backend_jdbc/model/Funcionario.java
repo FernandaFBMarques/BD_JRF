@@ -14,6 +14,7 @@ public class Funcionario {
     private int numero;
     private String cidade;
     private String bairro;
+    private String cargo;
     private boolean estaAtivo = true;
 
     // Adicionar relações com Contador e EquipeDeVendas
