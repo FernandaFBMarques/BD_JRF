@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
-
 @RestController
 @RequestMapping("/funcionarios")
 public class FuncionarioController {
@@ -17,45 +16,26 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
 
-    @GetMapping("/{cpf}")
-    public ResponseEntity<Funcionario> getFuncionarioByCpf(@PathVariable String cpf) {
-        Optional<Funcionario> funcionario = funcionarioService.getFuncionarioByCpf(cpf);
-        return funcionario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
-    }
-
-
     @PostMapping
     public void createFuncionario(@RequestBody Funcionario funcionario) throws SQLException {
         funcionarioService.createFuncionario(funcionario);
     }
 
     @GetMapping
-    public List<Funcionario> getAllFuncionarios() {
+    public List<Funcionario> getAllFuncionarios(@RequestParam(required = false) Boolean ativo) {
+        if (ativo != null) {
+            return funcionarioService.findByAtivo(ativo);
+        }
         return funcionarioService.findAll();
     }
 
+    @PutMapping("/{cpf}")
+    public void updateFuncionario(@PathVariable String cpf, @RequestBody Funcionario funcionario) throws SQLException {
+        funcionarioService.updateFuncionario(cpf, funcionario);
+    }
 
-//    @PutMapping("/{cpf}")
-//    public ResponseEntity<Funcionario> updateFuncionario(@PathVariable String cpf, @RequestBody Funcionario funcionarioDetails) {
-//        Optional<Funcionario> funcionario = funcionarioService.getFuncionarioByCpf(cpf);
-//        if (funcionario.isPresent()) {
-//            funcionarioDetails.setCpf(cpf);
-//            funcionarioService.updateFuncionario(funcionarioDetails);
-//            return ResponseEntity.ok(funcionarioDetails);
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-
-//    @DeleteMapping("/{cpf}")
-//    public ResponseEntity<Void> deleteFuncionario(@PathVariable String cpf) {
-//        Optional<Funcionario> funcionario = funcionarioService.getFuncionarioByCpf(cpf);
-//        if (funcionario.isPresent()) {
-//            funcionarioService.deleteFuncionario(cpf);
-//            return ResponseEntity.noContent().build();
-//        } else {
-//            return ResponseEntity.notFound().build();
-//        }
-//    }
-
+    @PutMapping("/inativar/{cpf}")
+    public void inativarFuncionario(@PathVariable String cpf) throws SQLException {
+        funcionarioService.inativarFuncionario(cpf);
+    }
 }

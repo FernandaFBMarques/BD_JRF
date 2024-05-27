@@ -20,14 +20,6 @@ public class FuncionarioRepository {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-
-    public Optional<Funcionario> findByCpf(String cpf) {
-        String sql = "SELECT * FROM Funcionarios WHERE cpf = ?";
-        return jdbcTemplate.query(sql, new Object[]{cpf}, new FuncionarioRowMapper())
-                .stream()
-                .findFirst();
-    }
-
     public List<Funcionario> findAll() {
         String sql = "SELECT f.*, " +
                 "c.clt, " +
@@ -39,8 +31,24 @@ public class FuncionarioRepository {
                 "END as cargo " +
                 "FROM Funcionarios f " +
                 "LEFT JOIN Contadores c ON f.cpf = c.fk_Funcionarios_cpf " +
-                "LEFT JOIN Equipe_de_vendas e ON f.cpf = e.fk_Funcionarios_cpf";
+                "LEFT JOIN Equipe_de_vendas e ON f.cpf = e.fk_Funcionarios_cpf ";
         return jdbcTemplate.query(sql, new FuncionarioRowMapper());
+    }
+
+    public List<Funcionario> findByAtivo(boolean ativo) {
+        String sql = "SELECT f.*, " +
+                "c.clt, " +
+                "e.cnpj, e.mat_gerente, " +
+                "CASE " +
+                "  WHEN c.fk_Funcionarios_cpf IS NOT NULL THEN 'Contador' " +
+                "  WHEN e.fk_Funcionarios_cpf IS NOT NULL THEN 'Equipe de Vendas' " +
+                "  ELSE 'Outro' " +
+                "END as cargo " +
+                "FROM Funcionarios f " +
+                "LEFT JOIN Contadores c ON f.cpf = c.fk_Funcionarios_cpf " +
+                "LEFT JOIN Equipe_de_vendas e ON f.cpf = e.fk_Funcionarios_cpf " +
+                "WHERE f.esta_ativo = ?";
+        return jdbcTemplate.query(sql, new Object[]{ativo}, new FuncionarioRowMapper());
     }
 
     public void saveFuncionario(Funcionario funcionario) throws SQLException {
@@ -61,6 +69,31 @@ public class FuncionarioRepository {
         } else if (funcionario.getEquipeDeVendas() != null) {
             saveEquipeDeVendas(funcionario.getEquipeDeVendas());
         }
+    }
+
+    public void updateFuncionario(String cpf, Funcionario funcionario) throws SQLException {
+        String sqlFuncionario = "UPDATE Funcionarios SET nome=?, telefone=?, email=?, rua=?, numero=?, cidade=?, bairro=?, esta_ativo=? WHERE cpf=?";
+        jdbcTemplate.update(sqlFuncionario,
+                funcionario.getNome(),
+                funcionario.getTelefone(),
+                funcionario.getEmail(),
+                funcionario.getRua(),
+                funcionario.getNumero(),
+                funcionario.getCidade(),
+                funcionario.getBairro(),
+                funcionario.isEstaAtivo(),
+                cpf);
+
+        if (funcionario.getContador() != null) {
+            saveContador(funcionario.getContador());
+        } else if (funcionario.getEquipeDeVendas() != null) {
+            saveEquipeDeVendas(funcionario.getEquipeDeVendas());
+        }
+    }
+
+    public void inativarFuncionario(String cpf) throws SQLException {
+        String sqlFuncionario = "UPDATE Funcionarios SET esta_ativo=false WHERE cpf=?";
+        jdbcTemplate.update(sqlFuncionario, cpf);
     }
 
     public void saveContador(Contador contador) throws SQLException {

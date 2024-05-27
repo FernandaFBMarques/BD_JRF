@@ -14,15 +14,6 @@ public class FuncionarioService {
     @Autowired
     private FuncionarioRepository funcionarioRepository;
 
-    public List<Funcionario> getAllFuncionarios() {
-        return funcionarioRepository.findAll();
-    }
-
-    public Optional<Funcionario> getFuncionarioByCpf(String cpf) {
-        return funcionarioRepository.findByCpf(cpf);
-    }
-
-
     public void createFuncionario(Funcionario funcionario) throws SQLException {
         funcionarioRepository.saveFuncionario(funcionario);
     }
@@ -31,11 +22,15 @@ public class FuncionarioService {
         return funcionarioRepository.findAll();
     }
 
-//    public void updateFuncionario(Funcionario funcionario) {
-//        funcionarioRepository.update(funcionario);
-//    }
-//
-//    public void deleteFuncionario(String cpf) {
-//        funcionarioRepository.deleteByCpf(cpf);
-//    }
+    public List<Funcionario> findByAtivo(boolean ativo) {
+        return funcionarioRepository.findByAtivo(ativo);
+    }
+
+    public void updateFuncionario(String cpf, Funcionario funcionario) throws SQLException {
+        funcionarioRepository.updateFuncionario(cpf, funcionario);
+    }
+
+    public void inativarFuncionario(String cpf) throws SQLException {
+        funcionarioRepository.inativarFuncionario(cpf);
+    }
 }
