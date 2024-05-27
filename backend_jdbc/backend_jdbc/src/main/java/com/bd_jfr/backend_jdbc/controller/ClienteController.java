@@ -37,4 +37,3 @@ public class ClienteController {
         clienteService.deleteCliente(cnpj);
     }
 }
-
