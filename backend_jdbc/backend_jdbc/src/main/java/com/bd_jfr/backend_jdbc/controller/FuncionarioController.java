@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,45 +17,45 @@ public class FuncionarioController {
     @Autowired
     private FuncionarioService funcionarioService;
 
-    @GetMapping
-    public List<Funcionario> getAllFuncionarios() {
-        return funcionarioService.getAllFuncionarios();
-    }
-
     @GetMapping("/{cpf}")
     public ResponseEntity<Funcionario> getFuncionarioByCpf(@PathVariable String cpf) {
         Optional<Funcionario> funcionario = funcionarioService.getFuncionarioByCpf(cpf);
         return funcionario.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
+
     @PostMapping
-    public ResponseEntity<Funcionario> createFuncionario(@RequestBody Funcionario funcionario) {
+    public void createFuncionario(@RequestBody Funcionario funcionario) throws SQLException {
         funcionarioService.createFuncionario(funcionario);
-        return ResponseEntity.ok(funcionario);
     }
 
-    @PutMapping("/{cpf}")
-    public ResponseEntity<Funcionario> updateFuncionario(@PathVariable String cpf, @RequestBody Funcionario funcionarioDetails) {
-        Optional<Funcionario> funcionario = funcionarioService.getFuncionarioByCpf(cpf);
-        if (funcionario.isPresent()) {
-            funcionarioDetails.setCpf(cpf);
-            funcionarioService.updateFuncionario(funcionarioDetails);
-            return ResponseEntity.ok(funcionarioDetails);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+    @GetMapping
+    public List<Funcionario> getAllFuncionarios() {
+        return funcionarioService.findAll();
     }
 
-    @DeleteMapping("/{cpf}")
-    public ResponseEntity<Void> deleteFuncionario(@PathVariable String cpf) {
-        Optional<Funcionario> funcionario = funcionarioService.getFuncionarioByCpf(cpf);
-        if (funcionario.isPresent()) {
-            funcionarioService.deleteFuncionario(cpf);
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
 
+//    @PutMapping("/{cpf}")
+//    public ResponseEntity<Funcionario> updateFuncionario(@PathVariable String cpf, @RequestBody Funcionario funcionarioDetails) {
+//        Optional<Funcionario> funcionario = funcionarioService.getFuncionarioByCpf(cpf);
+//        if (funcionario.isPresent()) {
+//            funcionarioDetails.setCpf(cpf);
+//            funcionarioService.updateFuncionario(funcionarioDetails);
+//            return ResponseEntity.ok(funcionarioDetails);
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
+
+//    @DeleteMapping("/{cpf}")
+//    public ResponseEntity<Void> deleteFuncionario(@PathVariable String cpf) {
+//        Optional<Funcionario> funcionario = funcionarioService.getFuncionarioByCpf(cpf);
+//        if (funcionario.isPresent()) {
+//            funcionarioService.deleteFuncionario(cpf);
+//            return ResponseEntity.noContent().build();
+//        } else {
+//            return ResponseEntity.notFound().build();
+//        }
+//    }
 
 }
