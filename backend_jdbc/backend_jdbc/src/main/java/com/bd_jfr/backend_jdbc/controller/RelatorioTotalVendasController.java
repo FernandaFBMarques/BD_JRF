@@ -19,4 +19,16 @@ public class RelatorioTotalVendasController {
     public RelatorioTotalVendas findRelatorioTotalVendas() {
         return relatorioTotalVendasService.findRelatorioTotalVendas();
     }
+
+    @GetMapping("/total-vendas-sem-imposto")
+    public double getTotalVendasSemImposto() {
+        return relatorioTotalVendasService.getTotalVendasSemImposto();
+    }
+
+    @GetMapping("/total-vendas-com-imposto")
+    public double getTotalVendasComImposto() {
+        return relatorioTotalVendasService.getTotalVendasComImposto();
+    }
+
+
 }

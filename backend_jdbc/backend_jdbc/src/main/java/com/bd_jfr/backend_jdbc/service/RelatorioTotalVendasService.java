@@ -15,4 +15,12 @@ public class RelatorioTotalVendasService {
     public RelatorioTotalVendas findRelatorioTotalVendas() {
         return relatorioTotalVendasRepository.findRelatorioTotalVendas();
     }
+
+    public double getTotalVendasSemImposto() {
+        return relatorioTotalVendasRepository.findRelatorioTotalVendas().getTotalVendas();
+    }
+
+    public double getTotalVendasComImposto() {
+        return relatorioTotalVendasRepository.findRelatorioTotalVendas().getTotalVendasComImposto();
+    }
 }

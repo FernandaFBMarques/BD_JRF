@@ -20,4 +20,10 @@ public class RelatorioVendasEquipeController {
     public List<RelatorioVendasEquipe> findRelatorioVendasEquipe() {
         return relatorioVendasEquipeService.findRelatorioVendasEquipe();
     }
+
+    @GetMapping("/vendas-por-membro")
+    public List<RelatorioVendasEquipe> getVendasPorMembro() {
+        return relatorioVendasEquipeService.getVendasPorMembro();
+    }
+
 }
