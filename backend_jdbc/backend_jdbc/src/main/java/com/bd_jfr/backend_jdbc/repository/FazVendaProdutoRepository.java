@@ -1,7 +1,7 @@
 package com.bd_jfr.backend_jdbc.repository;
 
-import com.bd_jfr.backend_jdbc.model.FazVendaProduto;
 import org.springframework.jdbc.core.JdbcTemplate;
+import com.bd_jfr.backend_jdbc.model.FazVendaProduto;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import java.sql.ResultSet;
@@ -17,8 +17,8 @@ public class FazVendaProdutoRepository {
     }
 
     public List<FazVendaProduto> findAll() {
-        String sql = "SELECT * FROM fazVendaProduto ORDER BY fk_Venda_numero_venda DESC";
-        return jdbcTemplate.query(sql, fazVendaProdutoRowMapper());
+        String sql = "SELECT * FROM fazVendaProduto";
+        return jdbcTemplate.query(sql, new FazVendaProdutoRowMapper());
     }
 
     public void save(FazVendaProduto fazVendaProduto) {
@@ -26,17 +26,20 @@ public class FazVendaProdutoRepository {
         jdbcTemplate.update(sql, fazVendaProduto.getFkVendaNumeroVenda(), fazVendaProduto.getFkProdutosCodigoDeBarras(), fazVendaProduto.getFkAtendeNumeroAtendimento(), fazVendaProduto.getQuantidadeDeProduto());
     }
 
-    private RowMapper<FazVendaProduto> fazVendaProdutoRowMapper() {
-        return new RowMapper<FazVendaProduto>() {
-            @Override
-            public FazVendaProduto mapRow(ResultSet rs, int rowNum) throws SQLException {
-                FazVendaProduto fazVendaProduto = new FazVendaProduto();
-                fazVendaProduto.setFkVendaNumeroVenda(rs.getInt("fk_Venda_numero_venda"));
-                fazVendaProduto.setFkProdutosCodigoDeBarras(rs.getString("fk_Produtos_codigo_de_barras"));
-                fazVendaProduto.setFkAtendeNumeroAtendimento(rs.getInt("fk_atende_numero_atendimento"));
-                fazVendaProduto.setQuantidadeDeProduto(rs.getInt("quantidade_de_produto"));
-                return fazVendaProduto;
-            }
-        };
+    public void updateQuantidade(int fkVendaNumeroVenda, String fkProdutosCodigoDeBarras, int quantidadeDeProduto) {
+        String sql = "UPDATE fazVendaProduto SET quantidade_de_produto = ? WHERE fk_Venda_numero_venda = ? AND fk_Produtos_codigo_de_barras = ?";
+        jdbcTemplate.update(sql, quantidadeDeProduto, fkVendaNumeroVenda, fkProdutosCodigoDeBarras);
+    }
+
+    private static class FazVendaProdutoRowMapper implements RowMapper<FazVendaProduto> {
+        @Override
+        public FazVendaProduto mapRow(ResultSet rs, int rowNum) throws SQLException {
+            FazVendaProduto fazVendaProduto = new FazVendaProduto();
+            fazVendaProduto.setFkVendaNumeroVenda(rs.getInt("fk_Venda_numero_venda"));
+            fazVendaProduto.setFkProdutosCodigoDeBarras(rs.getString("fk_Produtos_codigo_de_barras"));
+            fazVendaProduto.setFkAtendeNumeroAtendimento(rs.getInt("fk_atende_numero_atendimento"));
+            fazVendaProduto.setQuantidadeDeProduto(rs.getInt("quantidade_de_produto"));
+            return fazVendaProduto;
+        }
     }
 }
